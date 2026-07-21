@@ -35,7 +35,9 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-border bg-[var(--nav)] backdrop-blur-xl" : "bg-transparent"
+        scrolled
+          ? "border-b border-border bg-[var(--nav)] backdrop-blur-xl"
+          : "nav-over-hero bg-transparent"
       }`}
     >
       <nav className="section-pad container-site flex items-center justify-between py-4">

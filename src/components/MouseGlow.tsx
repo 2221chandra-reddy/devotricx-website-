@@ -26,7 +26,7 @@ export default function MouseGlow() {
         x: springX,
         y: springY,
         background:
-          "radial-gradient(circle, rgba(225,6,0,0.16) 0%, rgba(225,6,0,0) 70%)",
+          "radial-gradient(circle, rgba(239,68,68,0.1) 0%, rgba(239,68,68,0) 70%)",
       }}
     />
   );

@@ -46,7 +46,7 @@ export default function Process() {
                   transition={{ delay: i * 0.07, duration: 0.45 }}
                   className="relative flex min-w-[140px] flex-col items-center text-center sm:min-w-0"
                 >
-                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-accent/30 bg-bg-elevated text-accent shadow-[0_0_30px_rgba(225,6,0,0.15)]">
+                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-accent/30 bg-bg-elevated text-accent shadow-[0_0_30px_rgba(239,68,68,0.12)]">
                     <Icon size={26} />
                   </div>
                   <p className="mb-1 text-xs font-semibold tracking-widest text-accent">

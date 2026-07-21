@@ -51,7 +51,7 @@ export default function ChatAssistant() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed right-5 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-[0_12px_30px_rgba(225,6,0,0.45)] transition hover:scale-105"
+        className="fixed right-5 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-[0_12px_30px_rgba(239,68,68,0.4)] transition hover:scale-105"
         aria-label={open ? "Close quick help" : "Open quick help"}
         aria-expanded={open}
       >

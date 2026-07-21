@@ -14,7 +14,7 @@ type Heart = {
   rotate: number;
 };
 
-const COLORS = ["#ff4d6d", "#ff6b81", "#ff8fa3", "#e10600", "#ff3366", "#ff99ac"];
+const COLORS = ["#ff4d6d", "#ff6b81", "#ff8fa3", "#ef4444", "#ff3366", "#ff99ac"];
 
 let nextId = 0;
 

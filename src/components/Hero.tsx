@@ -13,10 +13,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+      className="hero-dark relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(225,6,0,0.22),_transparent_55%),linear-gradient(180deg,#05070f_0%,#0b1020_55%,var(--bg-soft)_100%)]" />
-      <ParticleBackground />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(225,6,0,0.22),_transparent_55%),linear-gradient(180deg,#05070f_0%,#0b1020_60%,#0a0f1c_100%)]" />
+      <ParticleBackground forceDark />
 
       <div className="pointer-events-none absolute top-[15%] left-[10%] h-56 w-56 rounded-full bg-accent/20 blur-3xl pulse-glow" />
       <div className="pointer-events-none absolute right-[8%] bottom-[18%] h-64 w-64 rounded-full bg-accent/12 blur-3xl float-slow" />
@@ -85,7 +85,7 @@ export default function Hero() {
               key={item.label}
               type="button"
               onClick={() => setActiveVideo(serviceVideos[item.videoKey])}
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-bg-elevated/40 px-4 py-2 text-sm text-muted backdrop-blur-sm transition hover:border-accent hover:bg-accent/10 hover:text-foreground"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-white/10 px-4 py-2 text-sm text-muted backdrop-blur-sm transition hover:border-accent hover:bg-accent/10 hover:text-foreground"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               <Play size={12} className="text-accent opacity-70 transition group-hover:opacity-100" />
@@ -100,12 +100,18 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.46 }}
           className="mt-10 flex flex-wrap gap-4"
         >
-          <a href="#contact" className="btn-primary">
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white bg-transparent px-[1.6rem] py-[0.9rem] font-semibold text-[#F5C542] transition hover:bg-white/10 hover:text-[#FFD76A]"
+          >
             Get Started
-            <ArrowRight size={18} />
+            <ArrowRight size={18} className="text-[#F5C542]" />
           </a>
-          <a href="#portfolio" className="btn-secondary">
-            <Play size={16} />
+          <a
+            href="#portfolio"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white bg-transparent px-[1.6rem] py-[0.9rem] font-semibold text-[#F5C542] transition hover:bg-white/10 hover:text-[#FFD76A]"
+          >
+            <Play size={16} className="text-[#F5C542]" />
             View Portfolio
           </a>
         </motion.div>

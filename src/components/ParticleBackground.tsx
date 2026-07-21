@@ -13,11 +13,11 @@ type Node3D = {
 const FOV = 320;
 const LINK_DIST = 0.42;
 
-export default function ParticleBackground() {
+export default function ParticleBackground({ forceDark = false }: { forceDark?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
-  const themeRef = useRef(theme);
-  themeRef.current = theme;
+  const themeRef = useRef(forceDark ? "dark" : theme);
+  themeRef.current = forceDark ? "dark" : theme;
 
   useEffect(() => {
     const canvas = canvasRef.current;

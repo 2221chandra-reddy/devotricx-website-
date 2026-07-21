@@ -60,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      data-theme="light"
       className={`${poppins.variable} ${spaceGrotesk.variable} ${orbitron.variable} h-full`}
     >
       <body className="min-h-full antialiased">

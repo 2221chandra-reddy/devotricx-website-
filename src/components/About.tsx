@@ -84,7 +84,7 @@ export default function About() {
             </div>
 
             <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-              <div className="mb-5 flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-2xl bg-accent font-display text-2xl font-bold text-white shadow-[0_0_40px_rgba(225,6,0,0.65)]">
+              <div className="mb-5 flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-2xl bg-accent font-display text-2xl font-bold text-white shadow-[0_0_40px_rgba(239,68,68,0.45)]">
                 DX
               </div>
               <p className="font-display text-2xl font-bold tracking-wide text-white md:text-3xl">

@@ -21,15 +21,15 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 function applyTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
   document.documentElement.style.colorScheme = theme;
-  window.localStorage.setItem("devotricx-theme", theme);
+  window.localStorage.setItem("devotricx-theme-v2", theme);
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("devotricx-theme") as Theme | null;
-    const initial = stored === "light" || stored === "dark" ? stored : "dark";
+    const stored = window.localStorage.getItem("devotricx-theme-v2") as Theme | null;
+    const initial = stored === "dark" ? "dark" : "light";
     setTheme(initial);
     applyTheme(initial);
   }, []);
@@ -52,7 +52,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 export function useTheme() {
   const ctx = useContext(ThemeContext);
   if (!ctx) {
-    return { theme: "dark" as Theme, toggleTheme: () => undefined };
+    return { theme: "light" as Theme, toggleTheme: () => undefined };
   }
   return ctx;
 }
