@@ -10,12 +10,14 @@ Use **Production** (and Preview if you want):
 
 | Name | Value |
 |------|--------|
-| `DATABASE_URL` | `postgresql://neondb_owner:npg_9PGbmKc7Ehoe@ep-small-butterfly-aydtup4g-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require` |
-| `DIRECT_URL` | `postgresql://neondb_owner:npg_9PGbmKc7Ehoe@ep-small-butterfly-aydtup4g.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require` |
-| `AUTH_SECRET` | `devotricx-live-secret-2026` |
+| `DATABASE_URL` | Neon **pooled** connection string (`...-pooler...neon.tech...`) |
+| `DIRECT_URL` | Neon **direct** connection string (host without `-pooler`) |
+| `AUTH_SECRET` | any long random text, e.g. `devotricx-live-secret-2026` |
 | `APP_URL` | `https://www.devotrix.com` |
 
-Then **Deployments → Redeploy** (or wait for the GitHub push deploy).
+Copy the URLs from the Neon console (Connect button). Do **not** commit them to GitHub.
+
+Then **Deployments → Redeploy**.
 
 ## Admin login
 - https://www.devotrix.com/admin/login
@@ -23,4 +25,4 @@ Then **Deployments → Redeploy** (or wait for the GitHub push deploy).
 - Password: `DevotricX123`
 
 ## Security
-You shared the DB password in chat. After live works, rotate the Neon password and update Vercel + local `.env`.
+If the DB password was shared in chat, rotate it in Neon and update Vercel + local `.env`.
