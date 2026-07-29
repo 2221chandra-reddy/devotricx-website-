@@ -13,6 +13,8 @@ type Props = {
 
 export default function AuthForm({ mode, showLogo = true, embedded = false }: Props) {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const isAdmin = mode === "admin";
@@ -20,34 +22,44 @@ export default function AuthForm({ mode, showLogo = true, embedded = false }: Pr
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
     setLoading(true);
-    const form = new FormData(e.currentTarget);
-    const payload = {
-      email: String(form.get("email") || ""),
-      password: String(form.get("password") || ""),
-    };
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-    setLoading(false);
-    if (!res.ok) {
-      setError(data.error || "Login failed");
-      return;
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail, password }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (!res.ok) {
+        setError(data.error || "Login failed");
+        return;
+      }
+      if (isAdmin && data.user.role !== "ADMIN") {
+        setError("Admin account required");
+        return;
+      }
+      if (!isAdmin && data.user.role !== "STUDENT") {
+        setError("User account required");
+        return;
+      }
+      router.push(isAdmin ? "/admin" : "/users/dashboard");
+      router.refresh();
+    } catch {
+      setError("Server error. Try again.");
+      setLoading(false);
     }
-    if (isAdmin && data.user.role !== "ADMIN") {
-      setError("Admin account required");
-      return;
-    }
-    if (!isAdmin && data.user.role !== "STUDENT") {
-      setError("User account required");
-      return;
-    }
-    router.push(isAdmin ? "/admin" : "/users/dashboard");
-    router.refresh();
   }
+
+  const fieldClass =
+    "w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-[#0F172A] outline-none focus:border-[#EF4444] focus:ring-2 focus:ring-[#EF4444]/20";
 
   return (
     <div
@@ -82,26 +94,38 @@ export default function AuthForm({ mode, showLogo = true, embedded = false }: Pr
           <label className="block text-sm">
             <span className="mb-1 block text-[#475569]">Email</span>
             <input
-              name="email"
               type="email"
-              required
+              inputMode="email"
               autoComplete="username"
+              spellCheck={false}
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError("");
+              }}
               placeholder={isAdmin ? "Admin email" : "Your email"}
-              className="w-full rounded-xl border border-[#E2E8F0] px-3 py-2 outline-none focus:border-[#EF4444]"
+              className={fieldClass}
             />
           </label>
           <label className="block text-sm">
             <span className="mb-1 block text-[#475569]">Password</span>
             <input
-              name="password"
               type="password"
-              required
               autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (error) setError("");
+              }}
               placeholder="Password"
-              className="w-full rounded-xl border border-[#E2E8F0] px-3 py-2 outline-none focus:border-[#EF4444]"
+              className={fieldClass}
             />
           </label>
-          {error ? <p className="text-sm text-[#EF4444]">{error}</p> : null}
+          {error ? (
+            <p className="rounded-xl bg-[#FEF2F2] px-3 py-2 text-sm text-[#EF4444]">{error}</p>
+          ) : null}
           <button
             type="submit"
             disabled={loading}
