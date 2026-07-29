@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import {
   createSessionToken,
+  ensureAdminUser,
   jsonError,
   setSessionCookie,
   verifyPassword,
@@ -13,6 +14,19 @@ export async function POST(req: Request) {
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
     if (!email || !password) return jsonError("Email and password required");
+
+    // Keep default admin account ready (local + cloud DB)
+    if (email === "mnr@devotricx.com") {
+      try {
+        await ensureAdminUser();
+      } catch (dbErr) {
+        console.error("Admin bootstrap failed:", dbErr);
+        return jsonError(
+          "Database not connected on live server. Add Neon Postgres DATABASE_URL in Vercel, then redeploy.",
+          503,
+        );
+      }
+    }
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return jsonError("Invalid email or password", 401);
@@ -34,6 +48,20 @@ export async function POST(req: Request) {
     });
   } catch (e) {
     console.error(e);
-    return jsonError("Login failed", 500);
+    const msg = e instanceof Error ? e.message : "";
+    if (
+      msg.toLowerCase().includes("database") ||
+      msg.toLowerCase().includes("sqlite") ||
+      msg.toLowerCase().includes("prisma") ||
+      msg.toLowerCase().includes("unable to open") ||
+      msg.toLowerCase().includes("connect") ||
+      msg.toLowerCase().includes("environ")
+    ) {
+      return jsonError(
+        "Database not connected on live server. Create free Neon DB and set DATABASE_URL in Vercel.",
+        503,
+      );
+    }
+    return jsonError("Login failed. Please try again.", 500);
   }
 }

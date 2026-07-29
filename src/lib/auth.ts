@@ -102,15 +102,20 @@ export function jsonError(message: string, status = 400) {
 
 export async function ensureAdminUser() {
   const email = "mnr@devotricx.com";
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) return existing;
-  return prisma.user.create({
-    data: {
+  const passwordHash = await hashPassword("DevotricX123");
+  return prisma.user.upsert({
+    where: { email },
+    update: {
+      name: "MNR Admin",
+      role: "ADMIN",
+      passwordHash,
+    },
+    create: {
       name: "MNR Admin",
       email,
       phone: "7672041816",
       role: "ADMIN",
-      passwordHash: await hashPassword("DevotricX123"),
+      passwordHash,
     },
   });
 }
