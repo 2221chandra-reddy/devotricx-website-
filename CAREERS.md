@@ -1,30 +1,26 @@
 # Careers + Users + Admin Portal
 
-Built into the same DevotricX Next.js website.
+## Why live /careers can fail on Vercel
 
-## Flow
+SQLite (`file:./dev.db`) only works on your PC. Vercel serverless cannot use a local SQLite file, so DB calls crash with a server error.
 
-1. **Admin** logs in and posts jobs (careers list starts empty).
-2. **Users** register, complete profile, then apply to published jobs.
-3. **Admin** reviews applications and updates status.
+### Fix for production (required)
 
-## URLs
+1. Create a free Postgres DB: https://neon.tech  
+2. Copy the connection string  
+3. In Vercel → Project → Settings → Environment Variables, add:
 
-- Careers: `/careers`
-- User register: `/users/register`
-- User login: `/users/login`
-- User dashboard: `/users/dashboard`
-- Admin login: `/admin/login`
-- Admin dashboard: `/admin`
+```
+DATABASE_URL=postgresql://...your-neon-url...
+AUTH_SECRET=any-long-random-secret
+APP_URL=https://www.devotrix.com
+```
 
-## Admin login
+4. Then we switch Prisma to PostgreSQL and redeploy (ask the agent to do this after Neon is ready).
 
-- Email: `MNR@devotricx.com`
-- Password: `DevotricX123`
+Until then, `/careers` shows the login page without crashing, but register/login/jobs need the cloud DB.
 
-No demo user accounts — users must register.
-
-## Local setup
+## Local
 
 ```bash
 npm install
@@ -33,14 +29,4 @@ npm run db:seed
 npm run dev
 ```
 
-## Storage
-
-- Database: SQLite (`prisma/dev.db`) for free local development
-- Resumes/photos: `public/uploads/`
-- Later you can move DB to PostgreSQL/Supabase and files to S3
-
-## Notes
-
-- Application status changes log an email placeholder in server console (wire Resend later)
-- Duplicate applications for the same job are blocked
-- Phone numbers are visible only in admin screens
+Admin: `MNR@devotricx.com` / `DevotricX123`

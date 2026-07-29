@@ -3,12 +3,23 @@ import UserLoginExperience from "@/components/portal/UserLoginExperience";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function CareersPage() {
   const session = await getSession();
-  const jobs = await prisma.job.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { createdAt: "desc" },
-  });
+
+  let jobs: Awaited<ReturnType<typeof prisma.job.findMany>> = [];
+  let dbOk = true;
+
+  try {
+    jobs = await prisma.job.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("Careers DB error:", error);
+    dbOk = false;
+  }
 
   if (session?.role !== "STUDENT") {
     return <UserLoginExperience />;
@@ -31,7 +42,16 @@ export default async function CareersPage() {
       </header>
 
       <div className="mx-auto max-w-[1100px] px-5 py-10">
-        {jobs.length > 0 ? (
+        {!dbOk ? (
+          <div className="rounded-3xl border border-[#FECACA] bg-[#FEF2F2] p-8 text-center">
+            <h1 className="font-display text-2xl font-bold text-[#0F172A]">Database not connected</h1>
+            <p className="mt-2 text-sm text-[#64748B]">
+              Careers needs a cloud database on Vercel (SQLite only works on your PC). Add a Neon
+              Postgres <code className="rounded bg-white px-1">DATABASE_URL</code> in Vercel
+              Environment Variables, then redeploy.
+            </p>
+          </div>
+        ) : jobs.length > 0 ? (
           <>
             <h1 className="font-display text-3xl font-bold text-[#0F172A]">Open Positions</h1>
             <p className="mt-2 text-[#64748B]">Apply for roles at DevotricX.</p>
