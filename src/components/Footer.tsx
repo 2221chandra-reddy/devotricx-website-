@@ -8,7 +8,8 @@ const columns = [
       { label: "About", href: "#about" },
       { label: "Services", href: "#services" },
       { label: "Portfolio", href: "#portfolio" },
-      { label: "Process", href: "#process" },
+      { label: "Careers", href: "/careers" },
+      { label: "Users", href: "/users/login" },
       { label: "Contact", href: "#contact" },
     ],
   },
@@ -19,6 +20,7 @@ const columns = [
       { label: "VR & AR", href: "#services" },
       { label: "Web Solutions", href: "#services" },
       { label: "e-Learning", href: "#services" },
+      { label: "Admin", href: "/admin/login" },
     ],
   },
 ];

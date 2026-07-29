@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { company } from "@/lib/company";
-import SectionHeading from "./SectionHeading";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "opening">("idle");
@@ -45,85 +44,77 @@ export default function Contact() {
     form.reset();
   };
 
-  return (
-    <section id="contact" className="section-pad relative py-24 md:py-32">
-      <div className="container-site">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let's start a conversation"
-          description="Share your project details and we’ll reply with a clear next step—usually within one business day."
-        />
+  const field =
+    "w-full rounded-xl border border-border bg-bg/50 px-3 py-2 text-sm text-foreground outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30";
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+  return (
+    <section id="contact" className="section-pad relative py-12 md:py-16">
+      <div className="container-site max-w-5xl">
+        <div className="mb-6 max-w-xl">
+          <p className="text-xs font-semibold tracking-[0.18em] text-accent uppercase">Contact</p>
+          <h2 className="mt-2 font-display text-2xl font-bold text-foreground md:text-3xl">
+            Let&apos;s start a conversation
+          </h2>
+          <p className="mt-2 text-sm text-muted">
+            Share your project details—we usually reply within one business day.
+          </p>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.form
             onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass rounded-3xl p-7 md:p-9"
+            className="glass rounded-2xl p-5"
           >
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-sm text-muted">Full Name</span>
-                <input
-                  required
-                  name="name"
-                  className="w-full rounded-2xl border border-border bg-bg/50 px-4 py-3 text-foreground outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30"
-                  placeholder="Your name"
-                />
+                <span className="mb-1 block text-xs text-muted">Full Name</span>
+                <input required name="name" className={field} placeholder="Your name" />
               </label>
               <label className="block">
-                <span className="mb-2 block text-sm text-muted">Email</span>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  className="w-full rounded-2xl border border-border bg-bg/50 px-4 py-3 text-foreground outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30"
-                  placeholder="you@company.com"
-                />
+                <span className="mb-1 block text-xs text-muted">Email</span>
+                <input required type="email" name="email" className={field} placeholder="you@company.com" />
               </label>
             </div>
-            <label className="mt-5 block">
-              <span className="mb-2 block text-sm text-muted">Service Interest</span>
-              <select
-                name="service"
-                className="w-full rounded-2xl border border-border bg-bg/50 px-4 py-3 text-foreground outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30"
-                defaultValue="2D & 3D Animation"
-              >
+            <label className="mt-3 block">
+              <span className="mb-1 block text-xs text-muted">Service Interest</span>
+              <select name="service" className={field} defaultValue="2D & 3D Animation">
                 <option>2D & 3D Animation</option>
                 <option>VR & AR</option>
                 <option>Web Solutions</option>
                 <option>e-Learning</option>
               </select>
             </label>
-            <label className="mt-5 block">
-              <span className="mb-2 block text-sm text-muted">Message</span>
+            <label className="mt-3 block">
+              <span className="mb-1 block text-xs text-muted">Message</span>
               <textarea
                 required
                 name="message"
-                rows={5}
-                className="w-full resize-none rounded-2xl border border-border bg-bg/50 px-4 py-3 text-foreground outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30"
-                placeholder="Share project goals, timeline, and scope..."
+                rows={3}
+                className={`${field} resize-none`}
+                placeholder="Goals, timeline, and scope..."
               />
             </label>
-            <button type="submit" className="btn-primary mt-6 w-full sm:w-auto">
-              <Send size={16} />
+            <button type="submit" className="btn-primary mt-4 !px-5 !py-2.5 text-sm">
+              <Send size={14} />
               {status === "opening" ? "Opening WhatsApp…" : "Send on WhatsApp"}
             </button>
-            <p className="mt-3 text-xs text-muted">
-              Submitting opens WhatsApp with your message ready to send.
+            <p className="mt-2 text-[11px] text-muted">
+              Opens WhatsApp with your message ready to send.
             </p>
           </motion.form>
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="space-y-5"
+            transition={{ delay: 0.08 }}
+            className="space-y-4"
           >
-            <div className="glass overflow-hidden rounded-3xl">
-              <div className="relative h-64 w-full md:h-72">
+            <div className="glass overflow-hidden rounded-2xl">
+              <div className="relative h-40 w-full sm:h-44">
                 <iframe
                   title="DevotricX office location on Google Maps"
                   src={company.mapsEmbed}
@@ -137,26 +128,26 @@ export default function Contact() {
                 href={company.mapsLink}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 border-t border-border px-4 py-3 text-sm text-muted transition hover:bg-accent-soft hover:text-accent"
+                className="flex items-center justify-center gap-2 border-t border-border px-3 py-2 text-xs text-muted transition hover:bg-accent-soft hover:text-accent"
               >
-                <ExternalLink size={14} />
+                <ExternalLink size={12} />
                 Open in Google Maps
               </a>
             </div>
 
-            <div className="glass space-y-4 rounded-3xl p-6">
+            <div className="glass space-y-3 rounded-2xl p-4">
               <div>
-                <p className="font-display text-base font-semibold text-foreground">
+                <p className="font-display text-sm font-semibold text-foreground">
                   DEVOTRIC<span className="text-accent">X</span>
                 </p>
-                <p className="text-sm text-muted">Technologies Private Limited</p>
+                <p className="text-xs text-muted">Technologies Private Limited</p>
               </div>
 
               <a
                 href={company.telLink}
-                className="flex items-center gap-3 text-foreground transition hover:text-accent"
+                className="flex items-center gap-2.5 text-sm text-foreground transition hover:text-accent"
               >
-                <Phone size={18} className="shrink-0 text-accent" />
+                <Phone size={15} className="shrink-0 text-accent" />
                 {company.phone}
               </a>
 
@@ -164,31 +155,29 @@ export default function Contact() {
                 href={company.mapsLink}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-start gap-3 text-foreground transition hover:text-accent"
+                className="flex items-start gap-2.5 text-foreground transition hover:text-accent"
               >
-                <MapPin size={18} className="mt-0.5 shrink-0 text-accent" />
-                <span className="text-sm leading-relaxed">{company.address}</span>
+                <MapPin size={15} className="mt-0.5 shrink-0 text-accent" />
+                <span className="text-xs leading-relaxed">{company.address}</span>
               </a>
 
               <a
                 href={`mailto:${company.email}`}
-                className="flex items-center gap-3 text-foreground transition hover:text-accent"
+                className="flex items-center gap-2.5 text-sm text-foreground transition hover:text-accent"
               >
-                <Mail size={18} className="shrink-0 text-accent" />
+                <Mail size={15} className="shrink-0 text-accent" />
                 {company.email}
               </a>
 
-              <div className="flex gap-3 pt-2">
-                <a
-                  href={company.whatsapp}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-foreground hover:border-accent"
-                >
-                  <MessageCircle size={16} className="text-accent" />
-                  WhatsApp
-                </a>
-              </div>
+              <a
+                href={company.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs text-foreground hover:border-accent"
+              >
+                <MessageCircle size={14} className="text-accent" />
+                WhatsApp
+              </a>
             </div>
           </motion.div>
         </div>
